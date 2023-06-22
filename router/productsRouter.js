@@ -1,19 +1,21 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const productsSchema = require('../Schema/productsSchema');
-const products = new  mongoose.model("products",productsSchema)
+const products = new mongoose.model("products", productsSchema)
 const router = express.Router()
 
 // post method 
 
-router.post('/',async(req,res)=>{
+
+
+router.post('/', async (req, res) => {
     const myproduct = products(req.body)
-    try{
-        const product  = await myproduct.save()
-        res.status(200).json({result:product})
+    try {
+        const product = await myproduct.save()
+        res.status(200).json({ result: product })
     }
-    catch(error){
-        res.status(500).json({"error":error.message})
+    catch (error) {
+        res.status(500).json({ "error": error.message })
     }
 })
 
@@ -21,39 +23,29 @@ router.post('/',async(req,res)=>{
 // get method 
 router.get('/', async (req, res) => {
     try {
-      const {title,filter} = req.query;
-      console.log(title,filter)
-      if (title === 'all') {
-        const allData = await products.find({}).sort(filter === 'hightolow' && { price: -1 } || filter === 'lowtohigh' && { price: 1 });
-        res.status(200).json(allData);
-      } else {
-        const query = { category: title };
-        const filteredData = await products.find(query).sort(filter === 'hightolow' && { price: -1 } || filter === 'lowtohigh' && { price: 1 });
-        res.status(200).json(filteredData);
-      }
+        const { title, filter } = req.query;
+        console.log(title, filter)
+        if (title === 'all') {
+            const allData = await products.find({}).sort(filter === 'hightolow' && { price: -1 } || filter === 'lowtohigh' && { price: 1 });
+            res.status(200).json(allData);
+        } else {
+            const query = { category: title };
+            const filteredData = await products.find(query).sort(filter === 'hightolow' && { price: -1 } || filter === 'lowtohigh' && { price: 1 });
+            res.status(200).json(filteredData);
+        }
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
-  });
+});
 
-
-// // get method 
-// router.get('/:filtercategory', async (req, res) => {
-//     try {
-//       const title = req.params.filtercategory;
-//       if (title === 'all') {
-//         const allData = await products.find({});
-//         res.status(200).json(allData);
-//       } else {
-//         const query = { category: title };
-//         const filteredData = await products.find(query);
-//         res.status(200).json(filteredData);
-//       }
-//     } catch (error) {
-//       res.status(500).json({ error: error.message });
-//     }
-//   });
-
+router.get('/all', async (req, res) => {
+    try {
+        const myProducts = await products.find({});
+        res.status(200).json(myProducts);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 
 
