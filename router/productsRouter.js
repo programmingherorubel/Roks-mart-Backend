@@ -19,21 +19,47 @@ router.post('/',async(req,res)=>{
 
 
 // get method 
-router.get('/:title', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-      const title = req.params.title;
-      
+      const {title,filter} = req.query;
+      console.log(title,filter)
       if (title === 'all') {
-        const allData = await products.find({});
+        const allData = await products.find({}).sort(filter === 'hightolow' && { price: -1 } || filter === 'lowtohigh' && { price: 1 });
         res.status(200).json(allData);
       } else {
         const query = { category: title };
-        const filteredData = await products.find(query);
+        const filteredData = await products.find(query).sort(filter === 'hightolow' && { price: -1 } || filter === 'lowtohigh' && { price: 1 });
         res.status(200).json(filteredData);
       }
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   });
+
+
+// // get method 
+// router.get('/:filtercategory', async (req, res) => {
+//     try {
+//       const title = req.params.filtercategory;
+//       if (title === 'all') {
+//         const allData = await products.find({});
+//         res.status(200).json(allData);
+//       } else {
+//         const query = { category: title };
+//         const filteredData = await products.find(query);
+//         res.status(200).json(filteredData);
+//       }
+//     } catch (error) {
+//       res.status(500).json({ error: error.message });
+//     }
+//   });
+
+
+
+
+
+
+
+
 
 module.exports = router

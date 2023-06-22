@@ -20,7 +20,6 @@ const router = express.Router()
     router.get('/',async(req,res)=>{
         try{
             const navigationData = await navigation.find({})
-            console.log(navigationData)
             res.status(200).json({"navigation":navigationData})
         }
         catch(error){
