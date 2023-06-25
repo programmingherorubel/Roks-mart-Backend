@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const { title, filter } = req.query;
-        console.log(title, filter)
+      
         if (title === 'all') {
             const allData = await products.find({}).sort(filter === 'hightolow' && { price: -1 } || filter === 'lowtohigh' && { price: 1 });
             res.status(200).json(allData);
@@ -37,6 +37,17 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+router.get('/single/:id',async(req,res)=>{
+    try{
+        const id = req.params.id 
+        const result = await products.findOne({_id:id})
+        res.status(200).json(result);
+    }
+    catch(error){
+        res.status(500).json({ error: error.message });
+    }
+})
 
 router.get('/all', async (req, res) => {
     try {
