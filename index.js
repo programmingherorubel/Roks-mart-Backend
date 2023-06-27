@@ -10,6 +10,7 @@ const categoryRouter = require('./router/categoryRouter')
 
 
 
+
 // middelware 
 const  app  = (express())
 app.use(cors())
@@ -28,6 +29,7 @@ mongoose.connect(process.env.MONGOOSE_ACCESS)
 app.use('/navigation',navigationRouter)
 app.use('/products',productsRouter)
 app.use('/category',categoryRouter)
+
 
 app.get('/',async(req,res)=>{
     res.send('hello world')

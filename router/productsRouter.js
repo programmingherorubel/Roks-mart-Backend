@@ -20,23 +20,38 @@ router.post('/', async (req, res) => {
 })
 
 
-// get method 
 router.get('/', async (req, res) => {
     try {
-        const { title, filter } = req.query;
+      const { title, filter, searchByShop } = req.query;
       
-        if (title === 'all') {
-            const allData = await products.find({}).sort(filter === 'hightolow' && { price: -1 } || filter === 'lowtohigh' && { price: 1 });
-            res.status(200).json(allData);
-        } else {
-            const query = { category: title };
-            const filteredData = await products.find(query).sort(filter === 'hightolow' && { price: -1 } || filter === 'lowtohigh' && { price: 1 });
-            res.status(200).json(filteredData);
-        }
+  
+      let query = {};
+      if(searchByShop){
+        query = {name:new RegExp(searchByShop, 'i')}
+      }
+     
+      if (title !== 'all') {
+        query.category = title;
+      }
+  
+      let sortOptions = {};
+
+      if (filter === 'hightolow') {
+        sortOptions.price = -1;
+
+      } else if (filter === 'lowtohigh') {
+        sortOptions.price = 1;
+      }
+ 
+
+      const filteredData = await products.find(query).sort(sortOptions);
+      console.log(filteredData)
+      res.status(200).json(filteredData);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
-});
+  });
 
 router.get('/single/:id',async(req,res)=>{
     try{
