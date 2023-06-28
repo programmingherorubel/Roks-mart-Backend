@@ -7,19 +7,22 @@ const cors = require('cors')
 const navigationRouter = require('./router/navigationRouter')
 const productsRouter = require('./router/productsRouter')
 const categoryRouter = require('./router/categoryRouter')
+const createPaymentIntentRouter = require('./router/createPaymentIntentRouter')
+const paymentinformationRouter = require('./router/paymentinformationRouter')
 
 
 
 
 // middelware 
 const  app  = (express())
-app.use(cors())
+app.use(cors()) 
 dotenv.config()
 app.use(express.json())
 
 // PORT 
 const port = process.env.PORT || 9000
 // connect mongoose 
+
 mongoose.connect(process.env.MONGOOSE_ACCESS)
     .then(()=> console.log('connection successfull'))
     .catch(err => console.log(err))
@@ -29,6 +32,8 @@ mongoose.connect(process.env.MONGOOSE_ACCESS)
 app.use('/navigation',navigationRouter)
 app.use('/products',productsRouter)
 app.use('/category',categoryRouter)
+app.use('/create-payment-intent',createPaymentIntentRouter)
+app.use('/paymentinformation',paymentinformationRouter)
 
 
 app.get('/',async(req,res)=>{

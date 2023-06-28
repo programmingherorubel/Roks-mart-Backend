@@ -45,10 +45,10 @@ router.get('/', async (req, res) => {
  
 
       const filteredData = await products.find(query).sort(sortOptions);
-      console.log(filteredData)
+     
       res.status(200).json(filteredData);
     } catch (error) {
-      console.error(error);
+      
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
