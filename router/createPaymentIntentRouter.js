@@ -5,7 +5,7 @@ const stripe = require("stripe")(process.env.PAYEMNT_KEY);
 const paymentSchema = require('../Schema/PaymentSchema');
 const payment = new mongoose.model("payment", paymentSchema)
 const router = express.Router()
-console.log(process.env.PAYEMNT_KEY)
+
 
 router.post('/', async (req, res) => {
 

@@ -14,9 +14,19 @@ const router = express.Router()
         }
     })
 
-    router.get('/',async(req,res)=>{
+    router.get('/:email',async(req,res)=>{
         try{
-            const paymentinfo =await paymentDetails.find({})
+            const email = req.params.email 
+            const paymentinfo =await paymentDetails.find({email:email})
+            res.status(200).json(paymentinfo)
+        }catch(error){
+            res.status(500).json({ "error": error.message })
+        }
+    })
+    router.get('/single/:id',async(req,res)=>{
+        try{
+            const id = req.params.id
+            const paymentinfo =await paymentDetails.find({_id:id})
             res.status(200).json(paymentinfo)
         }catch(error){
             res.status(500).json({ "error": error.message })
