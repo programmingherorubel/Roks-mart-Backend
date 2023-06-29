@@ -9,6 +9,7 @@ const productsRouter = require('./router/productsRouter')
 const categoryRouter = require('./router/categoryRouter')
 const createPaymentIntentRouter = require('./router/createPaymentIntentRouter')
 const paymentinformationRouter = require('./router/paymentinformationRouter')
+const billingaddressRouter = require('./router/billingAddressRouter')
 
 
 
@@ -34,6 +35,7 @@ app.use('/products',productsRouter)
 app.use('/category',categoryRouter)
 app.use('/create-payment-intent',createPaymentIntentRouter)
 app.use('/paymentinformation',paymentinformationRouter)
+app.use('/billingaddress',billingaddressRouter)
 
 
 app.get('/',async(req,res)=>{
