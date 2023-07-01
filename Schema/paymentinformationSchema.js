@@ -27,6 +27,9 @@ const paymentinformationSchema = mongoose.Schema({
     items:{
         type:Array,
         required:true
+    },
+    review:{
+        type:String
     }
 
 
