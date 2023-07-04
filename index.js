@@ -4,6 +4,7 @@ const dotenv = require('dotenv')
 const cors = require('cors')
 
 // router 
+const userRouter = require('./router/userRouter')
 const navigationRouter = require('./router/navigationRouter')
 const productsRouter = require('./router/productsRouter')
 const categoryRouter = require('./router/categoryRouter')
@@ -32,6 +33,7 @@ mongoose.connect(process.env.MONGOOSE_ACCESS)
 
 
 // connect router 
+app.use('/users',userRouter)
 app.use('/navigation',navigationRouter)
 app.use('/products',productsRouter)
 app.use('/category',categoryRouter)
